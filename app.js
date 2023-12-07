@@ -15,7 +15,8 @@ var firebaseConfig = {
 //  console.log(firebase.database);
 
  function startQuiz(){
-    window.location.href = "index2.html";
+     window.location.href = "index2.html";
+
  }
 
  var questions = [
@@ -48,58 +49,57 @@ var firebaseConfig = {
    option3: "character",
    correctAns: "character",
 },         
-// {
-//    question: "Which keyword is used to declare a variable in JavaScript?",
-//    option1: "define",
-//    option2: "var",
-//    option3: "int",
-//    correctAns: "var",
-// },
-// {
-//     question:"CSS stands for",
-//     option1:"Cascading Style sheet",
-//     option2:"Cascading Styling sheet",
-//     option3:"Cascading super sheet",
-//     correctAns:"Cascading Style sheet"
-// },
-// {
-//     question:"In how many ways can CSS be written in?",
-//     option1:"1",
-//     option2:"2",
-//     option3:"3",
-//     correctAns:"3"
-// },
-// {
-//     question:"Which tag gives your the largest heading in html",
-//     option1:"<h6>",
-//     option2:"<h2>",
-//     option3:"<h1>",
-//     correctAns:"<h1>"
-// },
-// {
-//     question:"how many data types in js?",
-//     option1:"6",
-//     option2:"7",
-//     option3:"8",
-//     correctAns:"8"
-// }
-// ,
-// {
-//     question:"how many days in febuary",
-//     option1:"30",
-//     option2:"28",
-//     option3:"29",
-//     correctAns:"28"
-// }
+{
+   question: "Which keyword is used to declare a variable in JavaScript?",
+   option1: "define",
+   option2: "var",
+   option3: "int",
+   correctAns: "var",
+},
+{
+    question:"CSS stands for",
+    option1:"Cascading Style sheet",
+    option2:"Cascading Styling sheet",
+    option3:"Cascading super sheet",
+    correctAns:"Cascading Style sheet"
+},
+{
+    question:"In how many ways can CSS be written in?",
+    option1:"1",
+    option2:"2",
+    option3:"3",
+    correctAns:"3"
+},
+{
+    question:"Which tag gives your the largest heading in html",
+    option1:"<h6>",
+    option2:"<h2>",
+    option3:"<h1>",
+    correctAns:"<h1>"
+},
+{
+    question:"how many data types in js?",
+    option1:"6",
+    option2:"7",
+    option3:"8",
+    correctAns:"8"
+}
+,
+{
+    question:"how many days in febuary",
+    option1:"30",
+    option2:"28",
+    option3:"29",
+    correctAns:"28"
+}
 ]
-    
-    
+     
     var para = document.getElementById("ques");
     var opt1 = document.getElementById("opt1");
     var opt2 = document.getElementById("opt2");
     var opt3 = document.getElementById("opt3");
     var button = document.getElementById("btn");
-    var timer = document.getElementById("timer")
+    var timer = document.getElementById("timer");
     var index = 0;
     var score = 0;
     var min = 1;
@@ -128,7 +128,6 @@ var firebaseConfig = {
         {
             if(getOptions[i].checked){
                 var selectedValue = getOptions[i].value;
-                var selectedQues = questions[index - 1]["question"];
                 var selectedAns = questions[index-1][`option${selectedValue}`]
                 var correctAns = questions[index - 1]["correctAns"]
                 if(selectedAns == correctAns){
@@ -145,8 +144,7 @@ var firebaseConfig = {
 
         
         if(index > questions.length - 1){
-
-            
+ 
             if((score / questions.length)*100 <= 100){
                 Swal.fire({
                     title: "Good job!",
@@ -183,7 +181,6 @@ var firebaseConfig = {
             index++
         }
     }
-
     
     function clicked()
     {
@@ -191,11 +188,8 @@ var firebaseConfig = {
         
         // for database//
         
-     var ques = document.getElementById("ques");
-     var opt1 = document.getElementById("opt1");
-     var opt2 = document.getElementById("opt2");
-     var opt3 = document.getElementById("opt3");
      var getOptions = document.getElementsByName("options");
+     var score = 0;
 
      for(var i = 0;i < getOptions.length; i++)
         {
@@ -203,20 +197,26 @@ var firebaseConfig = {
                 var selectedValue = getOptions[i].value;
                 var selectedQues = questions[index - 1]["question"];
                 var selectedAns = questions[index-1][`option${selectedValue}`]
-                var correctAns = questions[index - 1]["correctAns"]
+                var correctAns = questions[index - 1]["correctAns"] 
                 if(selectedAns == correctAns){
                     score++ 
-        
+
        }
 
-     var obj = {   
+       if(index > questions.length - 1){
+           
+       }
+
+
+
+     var obj = {
         selectedQues: selectedQues,
         selectedAns: selectedAns,
-        correctAns: correctAns
+        correctAns: correctAns,
+        score: score++
     }
          console.log(obj);    
-    }
-    
+    }   
 }
-firebase.database().ref("quiz/username/key").push(obj);
+        firebase.database().ref("quiz/key" + score).push(obj);
     }
